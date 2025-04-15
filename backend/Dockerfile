@@ -5,7 +5,7 @@ FROM node:16
 WORKDIR /app
 
 # Étape 3 : Copier package.json et package-lock.json pour installer les dépendances
-COPY backend/package*.json ./
+COPY package*.json ./
 
 # Étape 4 : Installer les dépendances
 RUN npm install

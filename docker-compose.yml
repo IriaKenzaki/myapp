@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .  # Indiquer le contexte de build à la racine du projet
+      dockerfile: backend/Dockerfile  # Spécifie le chemin du Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgres://postgres:Iriu1993!@db:5432/myappdb
+      - JWT_SECRET=monsecret
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=myappdb
+      - DB_USER=postgres
+      - DB_PASSWORD=Iriu1993!
+      - MONGO_URI=mongodb://mongo:27017/myappdb  # Connexion à MongoDB
+    depends_on:
+      - db
+      - mongo  # Dépendance sur MongoDB
+
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: myappdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Iriu1993!
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  mongo:
+    image: mongo:4.4
+    container_name: mongo
+    ports:
+      - "27017:27017"  # Expose MongoDB sur le port 27017
+    volumes:
+      - mongo-data:/data/db  # Volume pour persister les données de MongoDB
+
+volumes:
+  mongo-data:
+    driver: local  # Assure que les données de MongoDB sont persistées localement

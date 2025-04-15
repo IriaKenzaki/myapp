@@ -11,7 +11,7 @@ COPY backend/package*.json ./
 RUN npm install
 
 # Étape 5 : Copier tous les fichiers du répertoire actuel (backend) dans le conteneur
-COPY ./backend/ /app
+COPY . /app
 
 # Étape 6 : Exposer le port sur lequel l'app écoutera
 EXPOSE 3000
